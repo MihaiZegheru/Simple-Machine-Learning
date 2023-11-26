@@ -9,7 +9,7 @@
 
 train_field_t *train_field_new(int32_t data_size)
 {
-    train_field_t *train_field = malloc(sizeof(train_field_t *));
+    train_field_t *train_field = malloc(sizeof(train_field_t));
     if (!train_field) {
         exit(-1);
     }

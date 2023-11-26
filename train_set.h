@@ -11,7 +11,7 @@
 #include "train_field.h"
 
 typedef struct {
-    train_field_t *fields;
+    train_field_t **fields;
     uint32_t data_size;
 
     uint32_t size;

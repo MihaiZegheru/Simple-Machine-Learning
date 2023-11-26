@@ -22,6 +22,6 @@ int main(void)
     fclose(file);
 
     train_set_delete(train_set);
-
+    
     return 0;
 }
