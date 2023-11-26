@@ -1,2 +1,6 @@
+
+<!-- Copyright (c) 2023 Mihai Zegheru -->
+<!-- All rights reserved. -->
+
 # Simple-Machine-Learning
-Simple Machine Learning program in C
+Simple machine learning program in C
