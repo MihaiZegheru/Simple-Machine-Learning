@@ -25,4 +25,5 @@ train_field_t *train_field_new(int32_t data_size)
 void train_field_delete(train_field_t *train_field)
 {
     free(train_field->data);
+    free(train_field);
 }
