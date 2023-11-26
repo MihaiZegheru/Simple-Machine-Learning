@@ -53,3 +53,7 @@ dkms.conf
 
 # VS Code
 .vscode
+
+# Testing files
+in
+out
