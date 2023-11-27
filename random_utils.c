@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mihai Zegheru
+ *   All rights reserved.
+ */
+
 #include "random_utils.h"
 
 #include <stdlib.h>

@@ -1,8 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mihai Zegheru
+ *   All rights reserved.
+ */
+
 #include "neuron.h"
 
 #include <stdlib.h>
 
-#include <random_utils.h>
+#include "random_utils.h"
 
 neuron_t *neuron_new(size_t weights_size)
 {
@@ -10,6 +15,8 @@ neuron_t *neuron_new(size_t weights_size)
 
     neuron->weights = malloc(weights_size * sizeof(float));
     neuron->weights_size = weights_size;
+
+    return neuron;
 }
 
 void neuron_delete(neuron_t *neuron)

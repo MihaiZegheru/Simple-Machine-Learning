@@ -1,7 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mihai Zegheru
+ *   All rights reserved.
+ */
+
 #ifndef NEURON_H__
 #define NEURON_H__
 
-#include <stdint.h>
+#include <stddef.h>
 
 typedef struct {
     float *weights;
