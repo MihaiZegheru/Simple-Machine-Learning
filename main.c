@@ -11,34 +11,36 @@
 
 #include "io_utils.h"
 #include "train_set.h"
+#include "neural_network.h"
 
-float random_float(void)
-{
-    return (float) rand() / RAND_MAX;
-}
+// float random_float(void)
+// {
+//     return (float) rand() / RAND_MAX;
+// }
 
-float sigmoidf(float x)
-{
-    return 1.f / (1.f + expf(-x));
-}
+// float sigmoidf(float x)
+// {
+//     return 1.f / (1.f + expf(-x));
+// }
 
-float cost(float w, float b, train_set_t *train_set) {
-    // y = x * w + b, where x is the fed data
-    float result = 0.f;
-    for (size_t i = 0; i < train_set->size; i++) {
-        float x = train_set->fields[i]->data[0];
-        float y = sigmoidf(x * w + b);
-        float d = y - train_set->fields[i]->result;
-        result += d * d;
-    }
+// float cost(float w, float b, train_set_t *train_set) {
+//     // y = x * w + b, where x is the fed data
+//     float result = 0.f;
+//     for (size_t i = 0; i < train_set->fields_size; i++) {
+//         float x = train_set->fields[i]->data[0];
+//         float y = sigmoidf(x * w + b);
+//         float d = y - train_set->fields[i]->result;
+//         result += d * d;
+//     }
 
-    result /= train_set->size;
+//     result /= train_set->fields_size;
     
-    return result;
-}
+//     return result;
+// }
 
 int main(void)
 {
+    setbuf(stdout, NULL);
     train_set_t *train_set;
 
     // Read the train set
@@ -50,30 +52,29 @@ int main(void)
     srand(time(0)); 
     // srand(1);
     
-    float w = random_float();
-    float b = random_float();
+    neural_network_t *neural_network = neural_network_new(3);
 
-    float EPS = 1e-3;
-    float RATE = 1e-3;
+    size_t v[3] = {2, 3, 2};
+    neural_network_init(2, 3, v, neural_network);
 
-    for (size_t i = 0; i < 10000; i++) {
-        float c = cost(w, b, train_set);
-        // printf("w = %f, b = %f, c = %f\n", w, b, c);
+    train_field_t *train_field = train_set->fields[0];
+    float result = neural_network_forward(train_field, neural_network);
+    printf("%f\n", result);
 
-        float dw = (cost(w + EPS, b, train_set) - c) / EPS;
-        float db = (cost(w, b + EPS, train_set) - c) / EPS;
+    float cost = neural_network_cost(train_set, neural_network);
+    printf("%f\n", cost);
+    printf("AA");
+    for (size_t i = 0; i < 1; i++) {
+        printf("AA");
+        neural_network_t *aux_neural_network =
+                neural_network_finite_difference(train_set, neural_network);
+        neural_network_learn(aux_neural_network, neural_network);
 
-        w -= RATE * dw;
-        b -= RATE * db;
+        neural_network_delete(aux_neural_network);
     }
-    printf("w = %f, b = %f, c = %f\n", w, b, cost(w, b, train_set));
-    printf("Wainting for input...\n");
-    for (size_t i = 0; i < 10; i++) {
-        float x;
-        scanf("%f", &x);
-        float y = x * w + b;
-        printf("%f\n", y);
-    }
+
+    cost = neural_network_cost(train_set, neural_network);
+    printf("%f\n", cost);
 
     train_set_delete(train_set);
     

@@ -12,12 +12,10 @@
 
 typedef struct {
     train_field_t **fields;
-    uint32_t data_size;
-
-    uint32_t size;
+    uint32_t fields_size;
 } train_set_t;
 
-train_set_t *train_set_new(uint32_t size);
+train_set_t *train_set_new(uint32_t fields_size);
 void train_set_delete(train_set_t *train_set);
 
 #endif
