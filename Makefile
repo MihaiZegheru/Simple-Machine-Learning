@@ -6,7 +6,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -std=c99
 
-SOURCES=main.c train_field.c train_set.c io_utils.c
+SOURCES=main.c train_field.c train_set.c io_utils.c neuron.c
 
 build:
 	$(CC) $(CFLAGS) $(SOURCES) -o SimpleMachineLearning.exe -lm
