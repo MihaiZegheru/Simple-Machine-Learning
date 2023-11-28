@@ -13,31 +13,6 @@
 #include "train_set.h"
 #include "neural_network.h"
 
-// float random_float(void)
-// {
-//     return (float) rand() / RAND_MAX;
-// }
-
-// float sigmoidf(float x)
-// {
-//     return 1.f / (1.f + expf(-x));
-// }
-
-// float cost(float w, float b, train_set_t *train_set) {
-//     // y = x * w + b, where x is the fed data
-//     float result = 0.f;
-//     for (size_t i = 0; i < train_set->fields_size; i++) {
-//         float x = train_set->fields[i]->data[0];
-//         float y = sigmoidf(x * w + b);
-//         float d = y - train_set->fields[i]->result;
-//         result += d * d;
-//     }
-
-//     result /= train_set->fields_size;
-    
-//     return result;
-// }
-
 int main(void)
 {
     setbuf(stdout, NULL);
@@ -52,8 +27,8 @@ int main(void)
     // srand(time(0)); 
     srand(1);
 
-    size_t v[1] = {2};
-    neural_network_t *neural_network = neural_network_new(2, 1, v);
+    size_t v[2] = {2, 2};
+    neural_network_t *neural_network = neural_network_new(2, 2, v);
 
     float cost = neural_network_cost(train_set, neural_network);
     printf("Initial cost: %f\n", cost);

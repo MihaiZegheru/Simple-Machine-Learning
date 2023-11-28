@@ -187,22 +187,3 @@ void neural_network_learn(neural_network_t *aux_neural_network,
         }
     }
 }
-
-// void train(train_set_t *train_set, neural_network_t *neural_network)
-// {
-//     for (size_t i = 0; i < train_set->fields_size; i++) {
-//         train_field_t *train_field = train_set->fields[i];
-//         for (size_t j = 0; j < train_set->data_size; j++) {
-            
-//             neuron_layer_t *neuron_layer = neural_network->neuron_layers[0];
-
-//             for (size_t k = 0; k < neuron_layer->neurons_size; k++) {
-//                 neuron_t *neuron = neuron_layer->neurons[k];
-
-//                 // float 
-//             }
-//         }
-//     }
-// }
-
-

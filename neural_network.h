@@ -21,13 +21,9 @@ neural_network_t *neural_network_new (size_t input_size,
                                       size_t neuron_layers_size,
                                       size_t *neurons_sizes);
 void neural_network_delete(neural_network_t *neural_network);
-
 void neural_network_init(size_t input_size, size_t neuron_layers_size,
                          size_t *neurons_sizes,
                          neural_network_t *neural_network);
-
-// void train(train_set_t *train_set, neural_network_t *neural_network);
-
 
 float neural_network_forward(train_field_t *train_field,
                              neural_network_t *neural_network);
