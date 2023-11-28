@@ -23,6 +23,9 @@ neural_network_t *neural_network_new(size_t neuron_layers_size)
 
 void neural_network_delete(neural_network_t *neural_network)
 {
+    for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
+        neuron_layer_delete(neural_network->neuron_layers[i]);
+    }
     free(neural_network->neuron_layers);
     free(neural_network);
 }

@@ -19,6 +19,9 @@ neuron_layer_t *neuron_layer_new(size_t neurons_size)
 
 void neuron_layer_delete(neuron_layer_t *neuron_layer)
 {
+    for (size_t i = 0; i < neuron_layer->neurons_size; i++) {
+        neuron_delete(neuron_layer->neurons[i]);
+    }
     free(neuron_layer->neurons);
     free(neuron_layer);
 }
