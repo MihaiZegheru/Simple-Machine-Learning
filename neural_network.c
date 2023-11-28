@@ -94,7 +94,10 @@ float neural_network_forward(train_field_t *train_field,
         }
         layer_result->data_size = neuron_layer->neurons_size;
 
-        // train_field_delete(current_train_field);
+        if (current_train_field != train_field) {
+            train_field_delete(current_train_field);
+        }
+
         // printf("BB\n");
         // printf("Z%f\n", current_train_field->data[0]);
         current_train_field = layer_result;
