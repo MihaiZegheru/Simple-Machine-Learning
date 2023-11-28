@@ -127,15 +127,12 @@ float neural_network_cost(train_set_t *train_set,
     return result;
 }
 
-neural_network_t *neural_network_finite_difference
-        (train_set_t *train_set, neural_network_t *neural_network)
+void neural_network_finite_difference(train_set_t *train_set,
+        neural_network_t *aux_neural_network, neural_network_t *neural_network)
 {
     float eps = 1e-1;
 
     float c = neural_network_cost(train_set, neural_network);
-
-    size_t v[1] = {2};
-    neural_network_t *aux_neural_network = neural_network_new(2, 1, v);
 
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
         neuron_layer_t *neuron_layer = neural_network->neuron_layers[i];
@@ -162,8 +159,6 @@ neural_network_t *neural_network_finite_difference
             neuron->bias = saved;
         }
     }
-
-    return aux_neural_network;
 }
 
 void neural_network_learn(neural_network_t *aux_neural_network,

@@ -24,18 +24,20 @@ int main(void)
     fread_train_set(file, &train_set);
     fclose(file);
 
-    // srand(time(0)); 
-    srand(1);
+    srand(time(0)); 
+    // srand(1);
 
     size_t v[1] = {2};
-    neural_network_t *neural_network = neural_network_new(1, 1, v);
+    neural_network_t *neural_network = neural_network_new(2, 1, v);
 
     float cost = neural_network_cost(train_set, neural_network);
     printf("Initial cost: %f\n", cost);
 
     for (size_t i = 0; i < 100000; i++) {
-        neural_network_t *aux_neural_network =
-                neural_network_finite_difference(train_set, neural_network);
+        neural_network_t *aux_neural_network = neural_network_new(2, 1, v);
+
+        neural_network_finite_difference(train_set, aux_neural_network,
+                neural_network);
 
         neural_network_learn(aux_neural_network, neural_network);
 

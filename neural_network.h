@@ -29,8 +29,8 @@ float neural_network_forward(train_field_t *train_field,
                              neural_network_t *neural_network);
 float neural_network_cost(train_set_t *train_set,
                           neural_network_t *neural_network);
-neural_network_t *neural_network_finite_difference(train_set_t *train_set,
-        neural_network_t *neural_network);
+void neural_network_finite_difference(train_set_t *train_set,
+        neural_network_t *aux_neural_network, neural_network_t *neural_network);
 void neural_network_learn(neural_network_t *aux_neural_network,
                           neural_network_t *neural_network);
 #endif
