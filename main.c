@@ -27,8 +27,8 @@ int main(void)
     // srand(time(0)); 
     srand(1);
 
-    size_t v[2] = {2, 2};
-    neural_network_t *neural_network = neural_network_new(2, 2, v);
+    size_t v[1] = {2};
+    neural_network_t *neural_network = neural_network_new(1, 1, v);
 
     float cost = neural_network_cost(train_set, neural_network);
     printf("Initial cost: %f\n", cost);
