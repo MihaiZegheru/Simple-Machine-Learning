@@ -6,6 +6,7 @@
 #include "neural_network.h"
 
 #include <stdio.h>
+#include "io_utils.h"
 
 neural_network_t *neural_network_new(size_t neuron_layers_size)
 {
@@ -71,7 +72,7 @@ float neural_network_forward(train_field_t *train_field,
         // Iterate through neurons
         for (size_t j = 0; j < neuron_layer->neurons_size; j++) {
             neuron_t *neuron = neuron_layer->neurons[j];
-        //             printf("B\n");
+                    // printf("B\n");
         // printf("%u %u\n", neuron->weights_size, current_train_field->data_size);
             if (neuron->weights_size != current_train_field->data_size) {
                 // ERR: these should be equal
@@ -89,16 +90,19 @@ float neural_network_forward(train_field_t *train_field,
             // TODO: Add activation function here
 
             layer_result->data[j] = neuron_result;
+            // printf("RR%f\n", neuron_result);
         }
         layer_result->data_size = neuron_layer->neurons_size;
 
         // train_field_delete(current_train_field);
-
+        // printf("BB\n");
+        // printf("Z%f\n", current_train_field->data[0]);
         current_train_field = layer_result;
+        // printf("Z%f\n", current_train_field->data[0]);
     }
 
     float result = current_train_field->data[0];
-
+    // printf("TT%f\n", result);
     train_field_delete(current_train_field);
 
     return result;
@@ -108,14 +112,17 @@ float neural_network_cost(train_set_t *train_set,
                          neural_network_t *neural_network)
 {
     float result = 0.0f;
+    // print_train_set(train_set);
     for (size_t i = 0; i < train_set->fields_size; i++) {
-        printf("%u ", i);
+        // printf("%u\nTrain set\n", i);
+        // print_train_field(train_set->fields[i]);
         float y = neural_network_forward(train_set->fields[i], neural_network);
+        // printf("%u\n", i);
         float d = y - train_set->fields[i]->result;
-        printf("%u ", i);
+        
         result += d * d;
     }
-
+    // print_train_set(train_set);
     result /= train_set->fields_size;
     return result;
 }
@@ -123,14 +130,13 @@ float neural_network_cost(train_set_t *train_set,
 neural_network_t *neural_network_finite_difference
         (train_set_t *train_set, neural_network_t *neural_network)
 {
-    float eps = 1e-2;
+    float eps = 1e-4;
+
     float c = neural_network_cost(train_set, neural_network);
 
-    neural_network_t *aux_neural_network =
-            neural_network_new(neural_network->neuron_layers_size - 1);
-
-    size_t v[3] = {2, 3, 2};
-    neural_network_init(2, 3, v, neural_network);
+    neural_network_t *aux_neural_network = neural_network_new(1);
+    size_t v[1] = {2};
+    neural_network_init(2, 1, v, aux_neural_network);
 
 
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
@@ -145,9 +151,13 @@ neural_network_t *neural_network_finite_difference
             for (size_t k = 0; k < neuron->weights_size; k++) {
                 float saved = neuron->weights[k];
                 neuron->weights[k] += eps;
+                
+                // printf("Layer: %u, Neuron: %u, Weight: %u\n", i, j, k);
                 aux_neuron->weights[k] =
                     (neural_network_cost(train_set, neural_network) - c) / eps;
                 neuron->weights[k] = saved;
+
+                // printf("New weight: %f\n", aux_neuron->weights[k]);
             }
 
             float saved = neuron->bias;

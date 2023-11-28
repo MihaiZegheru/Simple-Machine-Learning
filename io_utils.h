@@ -15,4 +15,7 @@ void fread_train_field(FILE *file, uint32_t data_size,
                        train_field_t *train_field);
 void fread_train_set(FILE *file, train_set_t **train_set);
 
+void print_train_field(train_field_t *train_field);
+void print_train_set(train_set_t *train_set);
+
 #endif

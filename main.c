@@ -49,25 +49,21 @@ int main(void)
     fread_train_set(file, &train_set);
     fclose(file);
 
-    srand(time(0)); 
-    // srand(1);
+    // srand(time(0)); 
+    srand(1);
     
-    neural_network_t *neural_network = neural_network_new(3);
+    neural_network_t *neural_network = neural_network_new(1);
 
-    size_t v[3] = {2, 3, 2};
-    neural_network_init(2, 3, v, neural_network);
-
-    train_field_t *train_field = train_set->fields[0];
-    float result = neural_network_forward(train_field, neural_network);
-    printf("%f\n", result);
+    size_t v[1] = {2};
+    neural_network_init(2, 1, v, neural_network);
 
     float cost = neural_network_cost(train_set, neural_network);
     printf("%f\n", cost);
-    printf("AA");
-    for (size_t i = 0; i < 1; i++) {
-        printf("AA");
+
+    for (size_t i = 0; i < 100000; i++) {
         neural_network_t *aux_neural_network =
                 neural_network_finite_difference(train_set, neural_network);
+
         neural_network_learn(aux_neural_network, neural_network);
 
         neural_network_delete(aux_neural_network);
@@ -75,6 +71,14 @@ int main(void)
 
     cost = neural_network_cost(train_set, neural_network);
     printf("%f\n", cost);
+
+
+    for (size_t i = 0; i < train_set->fields_size; i++) {
+        train_field_t *train_field = train_set->fields[i];
+        float result = neural_network_forward(train_field, neural_network);
+        train_field->result = result;
+        print_train_field(train_field);
+    }
 
     train_set_delete(train_set);
     
