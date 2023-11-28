@@ -8,7 +8,9 @@
 #include <stdio.h>
 #include "io_utils.h"
 
-neural_network_t *neural_network_new(size_t neuron_layers_size)
+neural_network_t *neural_network_new (size_t input_size,
+                                      size_t neuron_layers_size,
+                                      size_t *neurons_sizes)
 {
     // Add the output neuron
     neuron_layers_size++;
@@ -17,6 +19,9 @@ neural_network_t *neural_network_new(size_t neuron_layers_size)
     neural_network->neuron_layers = malloc(neuron_layers_size *
                                            sizeof(neuron_layer_t));
     neural_network->neuron_layers_size = neuron_layers_size;
+
+    neural_network_init(input_size, neuron_layers_size, neurons_sizes,
+                        neural_network);
 
     return neural_network;
 }

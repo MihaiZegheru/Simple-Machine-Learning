@@ -17,7 +17,9 @@ typedef struct {
     size_t neuron_layers_size;
 } neural_network_t;
 
-neural_network_t *neural_network_new(size_t neuron_layers_size);
+neural_network_t *neural_network_new (size_t input_size,
+                                      size_t neuron_layers_size,
+                                      size_t *neurons_sizes);
 void neural_network_delete(neural_network_t *neural_network);
 
 void neural_network_init(size_t input_size, size_t neuron_layers_size,
