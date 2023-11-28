@@ -13,7 +13,8 @@ SOURCES=main.c\
 		neuron.c\
 		random_utils.c\
 		neuron_layer.c\
-		neural_network.c
+		neural_network.c\
+		math_utils.c
 
 build:
 	$(CC) $(CFLAGS) $(SOURCES) -o SimpleMachineLearning.exe -lm

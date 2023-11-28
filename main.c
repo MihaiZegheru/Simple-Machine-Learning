@@ -55,28 +55,28 @@ int main(void)
     size_t v[1] = {2};
     neural_network_t *neural_network = neural_network_new(2, 1, v);
 
-    // float cost = neural_network_cost(train_set, neural_network);
-    // printf("%f\n", cost);
+    float cost = neural_network_cost(train_set, neural_network);
+    printf("Initial cost: %f\n", cost);
 
-    // for (size_t i = 0; i < 100000; i++) {
-    //     neural_network_t *aux_neural_network =
-    //             neural_network_finite_difference(train_set, neural_network);
+    for (size_t i = 0; i < 100000; i++) {
+        neural_network_t *aux_neural_network =
+                neural_network_finite_difference(train_set, neural_network);
 
-    //     neural_network_learn(aux_neural_network, neural_network);
+        neural_network_learn(aux_neural_network, neural_network);
 
-    //     neural_network_delete(aux_neural_network);
-    // }
+        neural_network_delete(aux_neural_network);
+    }
 
-    // cost = neural_network_cost(train_set, neural_network);
-    // printf("%f\n", cost);
+    cost = neural_network_cost(train_set, neural_network);
+    printf("Final cost: %f\n", cost);
 
 
-    // for (size_t i = 0; i < train_set->fields_size; i++) {
-    //     train_field_t *train_field = train_set->fields[i];
-    //     float result = neural_network_forward(train_field, neural_network);
-    //     train_field->result = result;
-    //     print_train_field(train_field);
-    // }
+    for (size_t i = 0; i < train_set->fields_size; i++) {
+        train_field_t *train_field = train_set->fields[i];
+        float result = neural_network_forward(train_field, neural_network);
+        train_field->result = result;
+        print_train_field(train_field);
+    }
 
     neural_network_delete(neural_network);
     train_set_delete(train_set);
