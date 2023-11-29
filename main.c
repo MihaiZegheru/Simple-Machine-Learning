@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "io_utils.h"
+#include "math_utils.h"
 #include "neural_network.h"
 
 int main(void)
@@ -27,9 +28,10 @@ int main(void)
     neural_network_configuration_t configuration;
     configuration.eps = 1e-1;
     configuration.learning_rate = 1;
-    configuration.iterations = 100000;
+    configuration.iterations = 10000;
     configuration.input_size = train_set->input_size;
     configuration.number_of_layers = 2;
+    configuration.activation_function = sigmoidf;
 
     configuration.numbers_of_neurons_per_layer =
             malloc(configuration.number_of_layers * sizeof(size_t));

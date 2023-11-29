@@ -7,10 +7,11 @@
 
 typedef struct {
     size_t input_size;
-    size_t number_of_layers;
     size_t *numbers_of_neurons_per_layer;
-
+    size_t number_of_layers;
     size_t iterations;
+
+    float (*activation_function)(float);
 
     float eps;
     float learning_rate;

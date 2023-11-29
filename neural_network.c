@@ -37,6 +37,16 @@ neural_network_t *neural_network_new(
     return neural_network;
 }
 
+void neural_network_delete(neural_network_t *neural_network)
+{
+    for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
+        neuron_layer_delete(neural_network->neuron_layers[i]);
+    }
+    free(neural_network->neuron_layers);
+    free(neural_network);
+}
+
+
 void neural_network_init(neural_network_t *neural_network)
 {
     neural_network_configuration_t *configuration =
@@ -56,19 +66,12 @@ void neural_network_init(neural_network_t *neural_network)
     }
 }
 
-void neural_network_delete(neural_network_t *neural_network)
-{
-    for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
-        neuron_layer_delete(neural_network->neuron_layers[i]);
-    }
-    free(neural_network->neuron_layers);
-    free(neural_network);
-}
-
 float neural_network_forward(train_field_t *train_field,
               neural_network_t *neural_network)
 {
     train_field_t *current_train_field = train_field;
+    float (*activation_function)(float) =
+            neural_network->neural_network_configuration->activation_function;
 
     // Iterate through layers
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
@@ -78,6 +81,7 @@ float neural_network_forward(train_field_t *train_field,
         train_field_t *layer_result =
                 train_field_new(neuron_layer->neurons_size);
 
+        // Iterate through neurons
         for (size_t j = 0; j < neuron_layer->neurons_size; j++) {
             neuron_t *neuron = neuron_layer->neurons[j];
             if (neuron->weights_size != current_train_field->data_size) {
@@ -85,22 +89,20 @@ float neural_network_forward(train_field_t *train_field,
             }
 
             float neuron_result = 0;
+            // Iterate through weights
             for (size_t k = 0; k < neuron->weights_size; k++) {
                 neuron_result += current_train_field->data[k] *
                                  neuron->weights[k];
             }
             neuron_result += neuron->bias;
-            
-            // TODO: Add activation function here
 
-            layer_result->data[j] = sigmoidf(neuron_result);
+            layer_result->data[j] = activation_function(neuron_result);
         }
         layer_result->data_size = neuron_layer->neurons_size;
 
         if (current_train_field != train_field) {
             train_field_delete(current_train_field);
         }
-
         current_train_field = layer_result;
     }
 
@@ -120,7 +122,7 @@ float neural_network_cost(train_set_t *train_set,
     for (size_t i = 0; i < train_set->fields_size; i++) {
         float y = neural_network_forward(train_set->fields[i], neural_network);
         float d = y - train_set->fields[i]->result;
-        
+
         result += d * d;
     }
     result /= train_set->fields_size;
@@ -135,6 +137,7 @@ void neural_network_finite_difference(train_set_t *train_set,
 
     float c = neural_network_cost(train_set, neural_network);
 
+    // Iterate through layers
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
         neuron_layer_t *neuron_layer = neural_network->neuron_layers[i];
         neuron_layer_t *aux_neuron_layer = aux_neural_network->neuron_layers[i];
@@ -144,6 +147,7 @@ void neural_network_finite_difference(train_set_t *train_set,
             neuron_t *neuron = neuron_layer->neurons[j];
             neuron_t *aux_neuron = aux_neuron_layer->neurons[j];
 
+            // Iterate through weights
             for (size_t k = 0; k < neuron->weights_size; k++) {
                 float saved = neuron->weights[k];
                 neuron->weights[k] += eps;
@@ -167,6 +171,7 @@ void neural_network_learn(neural_network_t *aux_neural_network,
 {
     float rate = neural_network->neural_network_configuration->learning_rate;
 
+    // Iterate through layers
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
         neuron_layer_t *neuron_layer = neural_network->neuron_layers[i];
         neuron_layer_t *aux_neuron_layer = aux_neural_network->neuron_layers[i];
@@ -176,6 +181,7 @@ void neural_network_learn(neural_network_t *aux_neural_network,
             neuron_t *neuron = neuron_layer->neurons[j];
             neuron_t *aux_neuron = aux_neuron_layer->neurons[j];
 
+            // Iterate through weights
             for (size_t k = 0; k < neuron->weights_size; k++) {
                 neuron->weights[k] -= rate * aux_neuron->weights[k];
             }
