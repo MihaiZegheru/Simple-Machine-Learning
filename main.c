@@ -29,24 +29,29 @@ int main(void)
     srand(time(0)); 
     // srand(1);
     
-    size_t input_size = train_set->input_size;
-    size_t v[1] = {11};
-    neural_network_t *neural_network = neural_network_new(input_size, 1, v);
-    neural_network->eps = 1e-1;
-    neural_network->learning_rate = 1;
+    neural_network_configuration_t configuration;
+    configuration.eps = 1e-2;
+    configuration.learning_rate = 1e-1;
+    configuration.iterations = 1000;
+    configuration.input_size = train_set->input_size;
+    configuration.number_of_layers = 2;
+
+    configuration.numbers_of_neurons_per_layer =
+            malloc(configuration.number_of_layers * sizeof(size_t));
+    configuration.numbers_of_neurons_per_layer[0] = 10;
+    configuration.numbers_of_neurons_per_layer
+            [configuration.number_of_layers - 1] = 1;
+
+    printf("AA");
+    neural_network_t *neural_network = neural_network_new(&configuration);
+    printf("AA");
+    neural_network_init(neural_network);
+    printf("AA");
+
     float cost = neural_network_cost(train_set, neural_network);
     printf("Initial cost: %f\n", cost);
 
-    for (size_t i = 0; i < 10000; i++) {
-        neural_network_t *aux_neural_network = neural_network_new(input_size, 1, v);
-
-        neural_network_finite_difference(train_set, aux_neural_network,
-                neural_network);
-
-        neural_network_learn(aux_neural_network, neural_network);
-
-        neural_network_delete(aux_neural_network);
-    }
+    neural_network_train(train_set, neural_network);
 
     cost = neural_network_cost(train_set, neural_network);
     printf("Final cost: %f\n", cost);

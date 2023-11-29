@@ -7,14 +7,14 @@
 
 #include <stdlib.h>
 
-train_field_t *train_field_new(int32_t data_size)
+train_field_t *train_field_new(size_t data_size)
 {
     train_field_t *train_field = malloc(sizeof(train_field_t));
     if (!train_field) {
         exit(-1);
     }
 
-    train_field->data = malloc(data_size * sizeof(int32_t));
+    train_field->data = malloc(data_size * sizeof(size_t));
     if (!train_field->data) {
         exit(-1);
     }

@@ -6,7 +6,7 @@
 #ifndef TRAIN_SET_H__
 #define TRAIN_SET_H__
 
-#include <stdint.h>
+#include <stdlib.h>
 
 #include "train_field.h"
 

@@ -9,27 +9,49 @@
 #include "io_utils.h"
 #include "math_utils.h"
 
-neural_network_t *neural_network_new (size_t input_size,
-                                      size_t neuron_layers_size,
-                                      size_t *neurons_sizes)
+neural_network_t *neural_network_new(
+        neural_network_configuration_t *configuration)
 {
     neural_network_t *neural_network = malloc(sizeof(neural_network_t));
     if (!neural_network) {
         exit(-1);
     }
+    neural_network->neural_network_configuration = configuration;
 
     // Add the output neuron
-    neural_network->neuron_layers_size = neuron_layers_size + 1;
     neural_network->neuron_layers = malloc(neural_network->neuron_layers_size *
-                                           sizeof(neuron_layer_t *));
+            sizeof(neuron_layer_t *));
     if (!neural_network->neuron_layers) {
         exit(-1);
     }
-    
-    neural_network_init(input_size, neuron_layers_size, neurons_sizes,
-                        neural_network);
 
+    // Check if last layer is of size 1
+    size_t number_of_layers = configuration->number_of_layers;
+    if (configuration->
+            numbers_of_neurons_per_layer[number_of_layers - 1] != 1) {
+        exit(-1);
+    }
+    
     return neural_network;
+}
+
+void neural_network_init(neural_network_t *neural_network)
+{
+    neural_network_configuration_t *configuration =
+            neural_network->neural_network_configuration;
+
+    for (size_t i = 0; i < configuration->number_of_layers; i++) {
+        neuron_layer_t *neuron_layer = neuron_layer_new(configuration->
+                numbers_of_neurons_per_layer[i]);
+        neural_network->neuron_layers[i] = neuron_layer;
+
+        size_t weights_size = configuration->input_size;
+        if (i) {
+            weights_size = configuration->numbers_of_neurons_per_layer[i - 1];
+        }
+
+        neuron_layer_init(weights_size, neuron_layer);
+    }
 }
 
 void neural_network_delete(neural_network_t *neural_network)
@@ -41,37 +63,10 @@ void neural_network_delete(neural_network_t *neural_network)
     free(neural_network);
 }
 
-void neural_network_init(size_t input_size, size_t neuron_layers_size,
-                         size_t *neurons_sizes,
-                         neural_network_t *neural_network)
-{
-    if (neuron_layers_size + 1 != neural_network->neuron_layers_size) {
-        // ERR: Number of neurons sizes not the same as neuron layers
-        exit(-1);
-    }
-
-    for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
-        neuron_layer_t *neuron_layer;
-        if (i == neural_network->neuron_layers_size - 1) {
-            neuron_layer = neuron_layer_new(1);
-        } else {
-            neuron_layer = neuron_layer_new(neurons_sizes[i]);
-        }
-
-        size_t weights_size = input_size;
-        if (i) {
-            weights_size = neurons_sizes[i - 1];
-        }
-
-        neuron_layer_init(weights_size, neuron_layer);
-
-        neural_network->neuron_layers[i] = neuron_layer;
-    }
-}
-
 float neural_network_forward(train_field_t *train_field,
               neural_network_t *neural_network)
 {
+    printf("BB");
     train_field_t *current_train_field = train_field;
 
     // Iterate through layers
@@ -85,7 +80,7 @@ float neural_network_forward(train_field_t *train_field,
         for (size_t j = 0; j < neuron_layer->neurons_size; j++) {
             neuron_t *neuron = neuron_layer->neurons[j];
             if (neuron->weights_size != current_train_field->data_size) {
-
+                printf("AA");
                 exit(-1);
             }
 
@@ -136,7 +131,7 @@ float neural_network_cost(train_set_t *train_set,
 void neural_network_finite_difference(train_set_t *train_set,
         neural_network_t *aux_neural_network, neural_network_t *neural_network)
 {
-    float eps = neural_network->eps;
+    float eps = neural_network->neural_network_configuration->eps;
 
     float c = neural_network_cost(train_set, neural_network);
 
@@ -170,7 +165,7 @@ void neural_network_finite_difference(train_set_t *train_set,
 void neural_network_learn(neural_network_t *aux_neural_network,
                           neural_network_t *neural_network)
 {
-    float rate = neural_network->learning_rate;
+    float rate = neural_network->neural_network_configuration->learning_rate;
 
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
         neuron_layer_t *neuron_layer = neural_network->neuron_layers[i];
@@ -186,5 +181,26 @@ void neural_network_learn(neural_network_t *aux_neural_network,
             }
             neuron->bias -= rate * aux_neuron->bias;
         }
+    }
+}
+
+void neural_network_train(train_set_t *train_set,
+        neural_network_t *neural_network)
+{
+
+    neural_network_configuration_t *configuration =
+            neural_network->neural_network_configuration;
+
+    size_t iterations = configuration->iterations;
+
+    for (size_t i = 0; i < iterations; i++) {
+        neural_network_t *aux_neural_network = 
+                neural_network_new(configuration);
+
+        neural_network_finite_difference(train_set, aux_neural_network,
+                neural_network);
+        neural_network_learn(aux_neural_network, neural_network);
+
+        neural_network_delete(aux_neural_network);
     }
 }

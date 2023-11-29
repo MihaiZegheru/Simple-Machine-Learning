@@ -6,7 +6,7 @@
 #ifndef TRAIN_FIELD_H__
 #define TRAIN_FIELD_H__
 
-#include <stdint.h>
+#include <stdlib.h>
 
 typedef struct {
     float *data;
@@ -15,7 +15,7 @@ typedef struct {
     float result;
 } train_field_t;
 
-train_field_t *train_field_new(int32_t data_size);
+train_field_t *train_field_new(size_t data_size);
 void train_field_delete(train_field_t *train_field);
 
 #endif

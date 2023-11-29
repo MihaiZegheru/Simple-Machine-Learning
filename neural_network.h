@@ -11,29 +11,30 @@
 #include "neuron_layer.h"
 #include "train_set.h"
 #include "train_field.h"
+#include "neural_network_configuration.h"
 
 typedef struct {
     neuron_layer_t **neuron_layers;
     size_t neuron_layers_size;
 
-    float eps;
-    float learning_rate;
+    neural_network_configuration_t *neural_network_configuration;
 } neural_network_t;
 
-neural_network_t *neural_network_new (size_t input_size,
-                                      size_t neuron_layers_size,
-                                      size_t *neurons_sizes);
+
+neural_network_t *neural_network_new(
+        neural_network_configuration_t *neural_network_configuration);
 void neural_network_delete(neural_network_t *neural_network);
-void neural_network_init(size_t input_size, size_t neuron_layers_size,
-                         size_t *neurons_sizes,
-                         neural_network_t *neural_network);
+void neural_network_init(neural_network_t *neural_network);
 
 float neural_network_forward(train_field_t *train_field,
-                             neural_network_t *neural_network);
+        neural_network_t *neural_network);
 float neural_network_cost(train_set_t *train_set,
-                          neural_network_t *neural_network);
+        neural_network_t *neural_network);
 void neural_network_finite_difference(train_set_t *train_set,
         neural_network_t *aux_neural_network, neural_network_t *neural_network);
 void neural_network_learn(neural_network_t *aux_neural_network,
-                          neural_network_t *neural_network);
+        neural_network_t *neural_network);
+void neural_network_train(train_set_t *train_set,
+        neural_network_t *neural_network);
+
 #endif
