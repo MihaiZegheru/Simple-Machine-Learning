@@ -30,13 +30,14 @@ int main(void)
     // srand(1);
     
     size_t input_size = train_set->input_size;
-    size_t v[1] = {2};
+    size_t v[1] = {11};
     neural_network_t *neural_network = neural_network_new(input_size, 1, v);
-
+    neural_network->eps = 1e-1;
+    neural_network->learning_rate = 1;
     float cost = neural_network_cost(train_set, neural_network);
     printf("Initial cost: %f\n", cost);
 
-    for (size_t i = 0; i < 100000; i++) {
+    for (size_t i = 0; i < 10000; i++) {
         neural_network_t *aux_neural_network = neural_network_new(input_size, 1, v);
 
         neural_network_finite_difference(train_set, aux_neural_network,

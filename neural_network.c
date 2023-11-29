@@ -136,7 +136,7 @@ float neural_network_cost(train_set_t *train_set,
 void neural_network_finite_difference(train_set_t *train_set,
         neural_network_t *aux_neural_network, neural_network_t *neural_network)
 {
-    float eps = 1e-1;
+    float eps = neural_network->eps;
 
     float c = neural_network_cost(train_set, neural_network);
 
@@ -170,7 +170,7 @@ void neural_network_finite_difference(train_set_t *train_set,
 void neural_network_learn(neural_network_t *aux_neural_network,
                           neural_network_t *neural_network)
 {
-    float rate = 1;
+    float rate = neural_network->learning_rate;
 
     for (size_t i = 0; i < neural_network->neuron_layers_size; i++) {
         neuron_layer_t *neuron_layer = neural_network->neuron_layers[i];
