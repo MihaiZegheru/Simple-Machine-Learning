@@ -80,7 +80,7 @@ float neural_network_forward(train_field_t *train_field,
 
         // Output of these layer neurons
         train_field_t *layer_result =
-                train_field_new(neural_network->neuron_layers_size);
+                train_field_new(neuron_layer->neurons_size);
 
         for (size_t j = 0; j < neuron_layer->neurons_size; j++) {
             neuron_t *neuron = neuron_layer->neurons[j];
