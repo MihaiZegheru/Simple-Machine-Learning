@@ -10,9 +10,16 @@
 neuron_layer_t *neuron_layer_new(size_t neurons_size)
 {
     neuron_layer_t *neuron_layer = malloc(sizeof(neuron_layer_t));
+    if (!neuron_layer) {
+        exit(-1);
+    }
 
-    neuron_layer->neurons = malloc(neurons_size * sizeof(neuron_t *));
     neuron_layer->neurons_size = neurons_size;
+    neuron_layer->neurons = malloc(neurons_size * sizeof(neuron_t *));
+    if (!neuron_layer->neurons) {
+        exit(-1);
+    }
+    
 
     return neuron_layer;
 }

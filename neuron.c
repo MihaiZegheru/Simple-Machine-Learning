@@ -12,9 +12,16 @@
 neuron_t *neuron_new(size_t weights_size)
 {
     neuron_t *neuron = malloc(sizeof(neuron_t));
+    if (!neuron) {
+        exit(-1);
+    }
 
-    neuron->weights = malloc(weights_size * sizeof(float));
     neuron->weights_size = weights_size;
+    neuron->weights = malloc(weights_size * sizeof(float));
+    if (!neuron->weights) {
+        exit(-1);
+    }
+    
 
     return neuron;
 }
