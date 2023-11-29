@@ -13,7 +13,7 @@ neural_network_t *neural_network_new (size_t input_size,
                                       size_t neuron_layers_size,
                                       size_t *neurons_sizes)
 {
-    neural_network_t *neural_network = malloc(sizeof(neural_network));
+    neural_network_t *neural_network = malloc(sizeof(neural_network_t));
     if (!neural_network) {
         exit(-1);
     }
@@ -21,7 +21,7 @@ neural_network_t *neural_network_new (size_t input_size,
     // Add the output neuron
     neural_network->neuron_layers_size = neuron_layers_size + 1;
     neural_network->neuron_layers = malloc(neural_network->neuron_layers_size *
-                                           sizeof(neuron_layer_t));
+                                           sizeof(neuron_layer_t *));
     if (!neural_network->neuron_layers) {
         exit(-1);
     }
