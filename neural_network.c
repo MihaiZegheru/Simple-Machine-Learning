@@ -67,7 +67,7 @@ void neural_network_init(neural_network_t *neural_network)
 }
 
 float neural_network_forward(train_field_t *train_field,
-              neural_network_t *neural_network)
+        neural_network_t *neural_network)
 {
     train_field_t *current_train_field = train_field;
     float (*activation_function)(float) =
@@ -89,13 +89,13 @@ float neural_network_forward(train_field_t *train_field,
             }
 
             float neuron_result = 0;
+
             // Iterate through weights
             for (size_t k = 0; k < neuron->weights_size; k++) {
                 neuron_result += current_train_field->data[k] *
-                                 neuron->weights[k];
+                        neuron->weights[k];
             }
             neuron_result += neuron->bias;
-
             layer_result->data[j] = activation_function(neuron_result);
         }
         layer_result->data_size = neuron_layer->neurons_size;
@@ -116,7 +116,7 @@ float neural_network_forward(train_field_t *train_field,
 }
 
 float neural_network_cost(train_set_t *train_set,
-                         neural_network_t *neural_network)
+        neural_network_t *neural_network)
 {
     float result = 0.0f;
     for (size_t i = 0; i < train_set->fields_size; i++) {
@@ -130,7 +130,7 @@ float neural_network_cost(train_set_t *train_set,
     return result;
 }
 
-void neural_network_finite_difference(train_set_t *train_set,
+void neural_network_compute_difference(train_set_t *train_set,
         neural_network_t *aux_neural_network, neural_network_t *neural_network)
 {
     float eps = neural_network->neural_network_configuration->eps;
@@ -152,22 +152,22 @@ void neural_network_finite_difference(train_set_t *train_set,
                 float saved = neuron->weights[k];
                 neuron->weights[k] += eps;
 
-                aux_neuron->weights[k] =
-                    (neural_network_cost(train_set, neural_network) - c) / eps;
+                aux_neuron->weights[k] = (neural_network_cost(train_set,
+                        neural_network) - c) / eps;
                 neuron->weights[k] = saved;
             }
 
             float saved = neuron->bias;
             neuron->bias += eps;
-            aux_neuron->bias =
-                (neural_network_cost(train_set, neural_network) - c) / eps;
+            aux_neuron->bias = (neural_network_cost(train_set,
+                    neural_network) - c) / eps;
             neuron->bias = saved;
         }
     }
 }
 
 void neural_network_learn(neural_network_t *aux_neural_network,
-                          neural_network_t *neural_network)
+        neural_network_t *neural_network)
 {
     float rate = neural_network->neural_network_configuration->learning_rate;
 
@@ -204,7 +204,7 @@ void neural_network_train(train_set_t *train_set,
                 neural_network_new(configuration);
         neural_network_init(aux_neural_network);
 
-        neural_network_finite_difference(train_set, aux_neural_network,
+        neural_network_compute_difference(train_set, aux_neural_network,
                 neural_network);
         neural_network_learn(aux_neural_network, neural_network);
 

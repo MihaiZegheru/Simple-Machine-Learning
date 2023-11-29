@@ -37,9 +37,6 @@ void neuron_layer_init(size_t weights_size, neuron_layer_t *neuron_layer)
 {
     for (size_t i = 0; i < neuron_layer->neurons_size; i++) {
         neuron_t *neuron = neuron_new(weights_size);
-
-        // Here should be provided other information, like the range of the rand
-        // or the activation function
         neuron_init(neuron);
 
         neuron_layer->neurons[i] = neuron;

@@ -13,7 +13,6 @@
 
 int main(void)
 {
-    setbuf(stdout, NULL);
     srand(time(0)); 
 
     // Read the train set-------------------------------------------------------

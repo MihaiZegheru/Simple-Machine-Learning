@@ -8,7 +8,6 @@
 
 #include <stdio.h>
 
-#include "train_field.h"
 #include "train_set.h"
 
 void fread_train_field(FILE *file, size_t data_size,

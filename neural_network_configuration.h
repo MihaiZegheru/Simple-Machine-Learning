@@ -2,6 +2,7 @@
  *   Copyright (c) 2023 Mihai Zegheru
  *   All rights reserved.
  */
+
 #ifndef NN_CONFIGURATION_H__
 #define NN_CONFIGURATION_H__
 

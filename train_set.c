@@ -29,7 +29,6 @@ void train_set_delete(train_set_t *train_set)
     for (size_t i = 0; i < train_set->fields_size; i++) {
         train_field_delete(train_set->fields[i]);
     }
-
     free(train_set->fields);
     free(train_set);
 }
