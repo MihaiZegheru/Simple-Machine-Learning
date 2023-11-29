@@ -47,9 +47,7 @@ void print_train_field(train_field_t *train_field)
 
 void print_train_set(train_set_t *train_set)
 {
-    printf("------------------------\n");
     for (size_t i = 0; i < train_set->fields_size; i++) {
         print_train_field(train_set->fields[i]);
     }
-    printf("------------------------\n");
 }

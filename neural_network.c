@@ -16,7 +16,9 @@ neural_network_t *neural_network_new(
     if (!neural_network) {
         exit(-1);
     }
+
     neural_network->neural_network_configuration = configuration;
+    neural_network->neuron_layers_size = configuration->number_of_layers;
 
     // Add the output neuron
     neural_network->neuron_layers = malloc(neural_network->neuron_layers_size *
@@ -66,7 +68,6 @@ void neural_network_delete(neural_network_t *neural_network)
 float neural_network_forward(train_field_t *train_field,
               neural_network_t *neural_network)
 {
-    printf("BB");
     train_field_t *current_train_field = train_field;
 
     // Iterate through layers
@@ -80,7 +81,6 @@ float neural_network_forward(train_field_t *train_field,
         for (size_t j = 0; j < neuron_layer->neurons_size; j++) {
             neuron_t *neuron = neuron_layer->neurons[j];
             if (neuron->weights_size != current_train_field->data_size) {
-                printf("AA");
                 exit(-1);
             }
 
@@ -192,10 +192,11 @@ void neural_network_train(train_set_t *train_set,
             neural_network->neural_network_configuration;
 
     size_t iterations = configuration->iterations;
-
+    
     for (size_t i = 0; i < iterations; i++) {
         neural_network_t *aux_neural_network = 
                 neural_network_new(configuration);
+        neural_network_init(aux_neural_network);
 
         neural_network_finite_difference(train_set, aux_neural_network,
                 neural_network);
