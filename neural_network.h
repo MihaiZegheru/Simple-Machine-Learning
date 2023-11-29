@@ -15,6 +15,9 @@
 typedef struct {
     neuron_layer_t **neuron_layers;
     size_t neuron_layers_size;
+
+    float eps;
+    float learning_rate;
 } neural_network_t;
 
 neural_network_t *neural_network_new (size_t input_size,

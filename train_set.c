@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-train_set_t *train_set_new(uint32_t fields_size)
+train_set_t *train_set_new(size_t fields_size)
 {
     train_set_t *train_set = malloc(sizeof(train_set_t));
     if (!train_set) {
@@ -26,7 +26,7 @@ train_set_t *train_set_new(uint32_t fields_size)
 
 void train_set_delete(train_set_t *train_set)
 {
-    for (uint32_t i = 0; i < train_set->fields_size; i++) {
+    for (size_t i = 0; i < train_set->fields_size; i++) {
         train_field_delete(train_set->fields[i]);
     }
 

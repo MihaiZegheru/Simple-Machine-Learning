@@ -13,6 +13,8 @@
 #include "train_set.h"
 #include "neural_network.h"
 
+// TODO: write a config file loader as json
+
 int main(void)
 {
     setbuf(stdout, NULL);
@@ -26,15 +28,16 @@ int main(void)
 
     srand(time(0)); 
     // srand(1);
-
-    size_t v[3] = {5, 10, 5};
-    neural_network_t *neural_network = neural_network_new(1, 3, v);
+    
+    size_t input_size = train_set->input_size;
+    size_t v[1] = {2};
+    neural_network_t *neural_network = neural_network_new(input_size, 1, v);
 
     float cost = neural_network_cost(train_set, neural_network);
     printf("Initial cost: %f\n", cost);
 
-    for (size_t i = 0; i < 1; i++) {
-        neural_network_t *aux_neural_network = neural_network_new(1, 3, v);
+    for (size_t i = 0; i < 100000; i++) {
+        neural_network_t *aux_neural_network = neural_network_new(input_size, 1, v);
 
         neural_network_finite_difference(train_set, aux_neural_network,
                 neural_network);

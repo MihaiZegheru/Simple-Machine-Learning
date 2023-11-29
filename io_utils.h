@@ -11,7 +11,7 @@
 #include "train_field.h"
 #include "train_set.h"
 
-void fread_train_field(FILE *file, uint32_t data_size,
+void fread_train_field(FILE *file, size_t data_size,
                        train_field_t *train_field);
 void fread_train_set(FILE *file, train_set_t **train_set);
 

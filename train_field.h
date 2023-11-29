@@ -9,8 +9,8 @@
 #include <stdint.h>
 
 typedef struct {
-float *data;
-    uint32_t data_size;
+    float *data;
+    size_t data_size;
 
     float result;
 } train_field_t;
