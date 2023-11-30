@@ -5,8 +5,6 @@
 
 #include "neuron.h"
 
-#include <stdlib.h>
-
 #include "../utils/random_utils.h"
 
 neuron_t *neuron_new(size_t weights_size)
@@ -21,7 +19,6 @@ neuron_t *neuron_new(size_t weights_size)
     if (!neuron->weights) {
         exit(-1);
     }
-    
 
     return neuron;
 }

@@ -6,6 +6,8 @@
 #ifndef NN_CONFIGURATION_H__
 #define NN_CONFIGURATION_H__
 
+#include <stddef.h>
+
 typedef struct {
     size_t input_size;
     size_t *numbers_of_neurons_per_layer;

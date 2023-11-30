@@ -5,7 +5,6 @@
 
 #include "neural_network.h"
 
-#include <stdio.h>
 #include "../utils/io_utils.h"
 #include "../utils/math_utils.h"
 

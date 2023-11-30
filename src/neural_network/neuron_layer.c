@@ -5,8 +5,6 @@
 
 #include "neuron_layer.h"
 
-#include <stdlib.h>
-
 neuron_layer_t *neuron_layer_new(size_t neurons_size)
 {
     neuron_layer_t *neuron_layer = malloc(sizeof(neuron_layer_t));
@@ -20,7 +18,6 @@ neuron_layer_t *neuron_layer_new(size_t neurons_size)
         exit(-1);
     }
     
-
     return neuron_layer;
 }
 

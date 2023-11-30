@@ -6,7 +6,7 @@
 #ifndef NEURON_LAYER_H__
 #define NEURON_LAYER_H__
 
-#include <stddef.h>
+#include <stdlib.h>
 
 #include "neuron.h"
 

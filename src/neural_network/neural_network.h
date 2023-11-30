@@ -8,10 +8,10 @@
 
 #include <stdlib.h>
 
+#include "neural_network_configuration.h"
 #include "neuron_layer.h"
 #include "../data_storing/train_set.h"
 #include "../data_storing/train_field.h"
-#include "neural_network_configuration.h"
 
 typedef struct {
     neuron_layer_t **neuron_layers;
