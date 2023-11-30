@@ -10,7 +10,7 @@ LIBS=-lm
 EXE=SimpleMachineLearning.exe
 
 SRC=src
-OUT=out
+OUT=build
 RES=res
 
 SOURCES=$(SRC)/main.c\
