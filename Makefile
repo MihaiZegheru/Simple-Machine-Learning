@@ -7,6 +7,8 @@ CC=gcc
 CFLAGS=-Wall -Wextra -std=c99
 LIBS=-lm
 
+EXE=SimpleMachineLearning.exe
+
 SRC=src
 OUT=out
 RES=res
@@ -22,7 +24,7 @@ SOURCES=$(SRC)/main.c\
 		$(SRC)/utils/math_utils.c
 
 build:
-	$(CC) $(CFLAGS) $(SOURCES) -o $(OUT)/SimpleMachineLearning.exe $(LIBS)
+	$(CC) $(CFLAGS) $(SOURCES) -o $(OUT)/$(EXE) $(LIBS)
 
 clean:
-	rm SimpleMachineLearning.exe
+	rm $(OUT)/$(EXE)

@@ -26,7 +26,7 @@ void fread_train_field(FILE *file, size_t data_size,
  * @param file 
  * @param train_set 
  */
-void fread_train_set(FILE *file, train_set_t *train_set);
+void fread_train_set(FILE *file, train_set_t **train_set);
 
 /**
  * @brief Print a given train field

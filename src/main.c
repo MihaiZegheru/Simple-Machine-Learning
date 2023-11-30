@@ -22,7 +22,7 @@ int main(void)
         exit(-1);
     }
     train_set_t *train_set;
-    fread_train_set(train_file, train_set);
+    fread_train_set(train_file, &train_set);
     fclose(train_file);
     // -------------------------------------------------------------------------
 
@@ -62,7 +62,7 @@ int main(void)
     if (!input_file) {
         exit(-1);
     }
-    fread_train_set(input_file, input_set);
+    fread_train_set(input_file, &input_set);
     
     neural_network_feed(input_set, neural_network);
     print_train_set(input_set);
