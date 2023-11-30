@@ -22,7 +22,7 @@ int main(void)
         exit(-1);
     }
     train_set_t *train_set;
-    fread_train_set(train_file, &train_set);
+    fread_train_set(train_file, train_set);
     fclose(train_file);
     // -------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ int main(void)
             [configuration.number_of_layers - 1] = 1;
     // ------------------------------------------------------------------------- 
 
-    // Create a new neural network and train------------------------------------
+    // Create a new neural network and train it---------------------------------
     neural_network_t *neural_network = neural_network_new(&configuration);
     neural_network_init(neural_network);
 
@@ -62,7 +62,7 @@ int main(void)
     if (!input_file) {
         exit(-1);
     }
-    fread_train_set(input_file, &input_set);
+    fread_train_set(input_file, input_set);
     
     neural_network_feed(input_set, neural_network);
     print_train_set(input_set);

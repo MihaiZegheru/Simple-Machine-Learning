@@ -15,7 +15,19 @@ typedef struct {
     float result;
 } train_field_t;
 
+/**
+ * @brief Instantiate a new train field and return it
+ * 
+ * @param data_size 
+ * @return train_field_t* 
+ */
 train_field_t *train_field_new(size_t data_size);
+
+/**
+ * @brief Delete a provided train field
+ * 
+ * @param train_field 
+ */
 void train_field_delete(train_field_t *train_field);
 
 #endif
