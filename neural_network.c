@@ -211,3 +211,14 @@ void neural_network_train(train_set_t *train_set,
         neural_network_delete(aux_neural_network);
     }
 }
+
+void neural_network_feed(train_set_t *input_set,
+        neural_network_t *neural_network)
+{
+    for (size_t i = 0; i < input_set->fields_size; i++) {
+        train_field_t *input_field = input_set->fields[i];
+
+        float result = neural_network_forward(input_field, neural_network);
+        input_field->result = result;
+    }
+}

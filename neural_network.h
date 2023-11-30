@@ -37,4 +37,7 @@ void neural_network_learn(neural_network_t *aux_neural_network,
 void neural_network_train(train_set_t *train_set,
         neural_network_t *neural_network);
 
+void neural_network_feed(train_set_t *input_set,
+        neural_network_t *neural_network);
+
 #endif

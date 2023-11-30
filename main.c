@@ -16,9 +16,9 @@ int main(void)
     srand(time(0)); 
 
     // Read the train set-------------------------------------------------------
-    train_set_t *train_set;
     FILE *train_file;
     train_file = fopen("train", "r");
+    train_set_t *train_set;
     fread_train_set(train_file, &train_set);
     fclose(train_file);
     // -------------------------------------------------------------------------
@@ -53,20 +53,15 @@ int main(void)
     // -------------------------------------------------------------------------
 
     // Provide the input--------------------------------------------------------
-    train_set_t *input_set;
     FILE *input_file;
+    train_set_t *input_set;
     input_file = fopen("input", "r");
     fread_train_set(input_file, &input_set);
     
-    for (size_t i = 0; i < input_set->fields_size; i++) {
-        train_field_t *input_field = input_set->fields[i];
+    neural_network_feed(input_set, neural_network);
+    print_train_set(input_set);
 
-        float result = neural_network_forward(input_field, neural_network);
-        input_field->result = result;
-
-        print_train_field(input_field);
-    }
-
+    train_set_delete(input_set);
     fclose(input_file);
     // -------------------------------------------------------------------------
     
