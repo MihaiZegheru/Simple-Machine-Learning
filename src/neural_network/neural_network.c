@@ -6,8 +6,8 @@
 #include "neural_network.h"
 
 #include <stdio.h>
-#include "io_utils.h"
-#include "math_utils.h"
+#include "../utils/io_utils.h"
+#include "../utils/math_utils.h"
 
 neural_network_t *neural_network_new(
         neural_network_configuration_t *configuration)

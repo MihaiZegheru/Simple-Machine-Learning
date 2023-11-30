@@ -5,16 +5,24 @@
 
 CC=gcc
 CFLAGS=-Wall -Wextra -std=c99
+LIBS=-lm
 
-SOURCES=main.c\
-		train_field.c\
-		train_set.c\
-		io_utils.c\
-		neuron.c\
-		random_utils.c\
-		neuron_layer.c\
-		neural_network.c\
-		math_utils.c
+SRC=src
+OUT=out
+RES=res
+
+SOURCES=$(SRC)/main.c\
+		$(SRC)/data_storing/train_field.c\
+		$(SRC)/data_storing/train_set.c\
+		$(SRC)/neural_network/neuron.c\
+		$(SRC)/neural_network/neuron_layer.c\
+		$(SRC)/neural_network/neural_network.c\
+		$(SRC)/utils/io_utils.c\
+		$(SRC)/utils/random_utils.c\
+		$(SRC)/utils/math_utils.c
 
 build:
-	$(CC) $(CFLAGS) $(SOURCES) -o SimpleMachineLearning.exe -lm
+	$(CC) $(CFLAGS) $(SOURCES) -o $(OUT)/SimpleMachineLearning.exe $(LIBS)
+
+clean:
+	rm SimpleMachineLearning.exe

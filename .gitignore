@@ -58,6 +58,6 @@ dkms.conf
 in
 out
 
-# Special files
-train
-input
+# Folders
+out/*
+res/*

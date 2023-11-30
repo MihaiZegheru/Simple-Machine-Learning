@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "random_utils.h"
+#include "../utils/random_utils.h"
 
 neuron_t *neuron_new(size_t weights_size)
 {

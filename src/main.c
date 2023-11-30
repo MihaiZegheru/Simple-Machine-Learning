@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "io_utils.h"
-#include "math_utils.h"
-#include "neural_network.h"
+#include "utils/io_utils.h"
+#include "utils/math_utils.h"
+#include "neural_network/neural_network.h"
 
 int main(void)
 {
@@ -17,7 +17,10 @@ int main(void)
 
     // Read the train set-------------------------------------------------------
     FILE *train_file;
-    train_file = fopen("train", "r");
+    train_file = fopen("./res/train", "r");
+    if (!train_file) {
+        exit(-1);
+    }
     train_set_t *train_set;
     fread_train_set(train_file, &train_set);
     fclose(train_file);
@@ -55,7 +58,10 @@ int main(void)
     // Provide the input--------------------------------------------------------
     FILE *input_file;
     train_set_t *input_set;
-    input_file = fopen("input", "r");
+    input_file = fopen("./res/input", "r");
+    if (!input_file) {
+        exit(-1);
+    }
     fread_train_set(input_file, &input_set);
     
     neural_network_feed(input_set, neural_network);
